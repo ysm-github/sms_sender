@@ -1,0 +1,223 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.sxdt</groupId>
+	<artifactId>sms_sender</artifactId>
+	<version>1.0.0</version>
+	<packaging>jar</packaging>
+
+	<name>SMS sender</name>
+	<url>http://www.sxit.com.cn</url>
+	<description>
+		SMS service platform by the third party, the realization of the
+		function of the message authentication code modules
+	</description>
+	<inceptionYear>2016</inceptionYear>
+	<mailingLists>
+		<mailingList>
+			<name>developers</name>
+			<post>yushiming@sxit.com.cn</post>
+		</mailingList>
+	</mailingLists>
+	<developers>
+		<developer>
+			<id>ysm</id>
+			<name>Shiming Yu</name>
+			<email>yushiming@sxit.com.cn</email>
+			<roles>
+				<role>Technical Lead</role>
+			</roles>
+		</developer>
+	</developers>
+	<issueManagement>
+		<system>redmine</system>
+		<url>http://auth.sxit.com.cn/redmine/projects/xincheng</url>
+	</issueManagement>
+
+	<!-- Build -->
+	<scm>
+		<connection>
+			scm:git:git://github.com/SXDT-DP/sms_sender.git
+		</connection>
+		<developerConnection>
+			scm:git:git@github.com/SXDT-DP/sms_sender.git
+		</developerConnection>
+		<url>https://github.com/SXDT-DP</url>
+	</scm>
+	<properties>
+		<project.build.sourceEncoding>
+			UTF-8
+		</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>
+			${project.build.sourceEncoding}
+		</project.reporting.outputEncoding>
+		<maven.compiler.encoding>
+			${project.build.sourceEncoding}
+		</maven.compiler.encoding>
+	</properties>
+	<distributionManagement>
+		<repository>
+			<id>nexus-releases</id>
+			<url>
+				http://auth.sxit.com.cn/nexus/content/repositories/releases/
+			</url>
+		</repository>
+	</distributionManagement>
+	<dependencies>
+		<!-- httpClient -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.10</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>sxit.vanke</groupId>
+			<artifactId>agent-api</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>
+				${basedir}\libs\mysql-connector-java-5.1.39-bin.jar
+			</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>**/*.*</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<defaultGoal>package</defaultGoal>
+		<plugins>
+		<!-- 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			-->
+			<!--  
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>UTF-8</encoding>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<!-- 构建可执行脚本zip包 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<!-- The configuration of the plugin -->
+				<configuration>
+					<!-- Configuration of the archiver -->
+					<archive>
+						<!-- 生成的jar中，不要包含pom.xml和pom.properties这两个文件 -->
+						<addMavenDescriptor>true</addMavenDescriptor>
+					  <!-- Manifest specific configuration -->
+                        <manifest>
+                        <!-- 是否要把第三方jar放到manifest的classpath中 -->
+							<addClasspath>true</addClasspath>
+							<!-- 生成的manifest中classpath的前缀，因为要把第三方jar放到lib目录下，所以classpath的前缀是lib/ -->
+							<classpathPrefix>lib/</classpathPrefix>
+							<!-- 应用的main class -->
+							<mainClass>com.sxdt.bi.sms.sender.Main</mainClass>
+                        </manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<!-- The configuration of maven-assembly-plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4</version>
+				<!-- The configuration of the plugin -->
+				<configuration>
+					<!-- Specifies the configuration file of the assembly plugin -->
+					<descriptors>
+						<descriptor>
+							src/main/assembly/assembly.xml
+						</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
