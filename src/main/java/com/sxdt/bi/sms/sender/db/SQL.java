@@ -9,14 +9,14 @@ public interface SQL {
 	/**
 	 * 查询待发短信sql语句
 	 */
-	String GET_MESSAGE="select number,message from sms_table where status=? order by pk limit ?";
+	String GET_MESSAGE="select mo_sid,mobile,message from sms_mo_message where status=? order by mo_sid limit ?";
 	
 	/**
 	 * 更新待发短信状态
 	 */
-	String UPDATE_MESSAGE="update sms_table set status=?,updateTime=? where pk=?";
+	String UPDATE_MESSAGE="update sms_mo_message set status=?,modified_time=now() where mo_sid=?";
 	/**
 	 * 保存发送日志
 	 */
-	String SAVE_SENDLOG="insert into sms_send_log(requestData,responseData,requestTime,responseTime) values(?,?,?,?)";
+	String SAVE_SENDLOG="insert into sms_mo_log(status_code,status_time,request_url,request_body,response_data,platform) values(?,?,?,?,?,?)";
 }

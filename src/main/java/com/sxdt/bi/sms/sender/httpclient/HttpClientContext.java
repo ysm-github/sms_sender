@@ -43,6 +43,7 @@ public class HttpClientContext {
     public static final int TIMEOUT         = 60 * 1000; // 连接超时时间
     public static final int SO_TIMEOUT      = 60 * 1000; // 数据传输超时
     public static final String CHARSET      = "UTF-8";
+    public static String request_body = "";
 	private HttpClient httpClient;
 	public HttpClientContext(){
 		initialize(10, 10);
@@ -198,7 +199,7 @@ public class HttpClientContext {
             {
             	//logger.info("set OriGUID:" + paramsMap.get("cstGUID"));
                 UrlEncodedFormEntity entity = new UrlEncodedFormEntity(getParamsList(paramsMap), CHARSET);  
-                //logger.info("POST请求报文:"+EntityUtils.toString(entity));
+                logger.info("POST请求报文:"+EntityUtils.toString(entity));
                 httpPost.setEntity(entity);
             }
             else
@@ -206,6 +207,7 @@ public class HttpClientContext {
             	//logger.info("POST请求报文:"+jsonXMLString);
                 httpPost.setEntity(new StringEntity(jsonXMLString, CHARSET));
             }
+            request_body = EntityUtils.toString(httpPost.getEntity());
             // 执行post请求
             HttpResponse httpResponse = httpClient.execute(httpPost);
 //            InputStream is = httpPost.getEntity().getContent(); 

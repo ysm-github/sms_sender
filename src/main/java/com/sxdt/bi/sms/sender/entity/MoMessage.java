@@ -6,7 +6,7 @@ package com.sxdt.bi.sms.sender.entity;
  * @date 2016-8-29 下午05:19:48
  */
 public class MoMessage {
-	private String pk;
+	private int mo_sid;
 	private String mobile;
 	private String message;
 	public String getMobile() {
@@ -21,11 +21,11 @@ public class MoMessage {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public String getPk() {
-		return pk;
+	public int getMo_sid() {
+		return mo_sid;
 	}
-	public void setPk(String pk) {
-		this.pk = pk;
+	public void setMo_sid(int mo_sid) {
+		this.mo_sid = mo_sid;
 	}
 	
 }

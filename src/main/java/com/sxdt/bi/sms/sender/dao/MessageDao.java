@@ -27,7 +27,7 @@ public interface MessageDao {
 	 * 批量更新消息状态
 	 * @param moMsgList 待发送消息列表
 	 */
-	public void batchUpdateMoMessage(List<MoMessage> moMsgList);
+	public void batchUpdateMoMessage(int status,List<MoMessage> moMsgList);
 	/**
 	 * 保存短信发送结果
 	 * @param log 短信发送结果

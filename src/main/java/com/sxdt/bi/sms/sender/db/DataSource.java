@@ -21,7 +21,7 @@ public class DataSource {
 		driver=Config.getConfig("jdbc.driver");
 		url=Config.getConfig("jdbc.url");
 		user=Config.getConfig("jdbc.user");
-		pwd=Config.getConfig("jdbc.passwd");
+		pwd=Config.getConfig("jdbc.password");
 		try {
 			Class.forName(driver);
 		} catch (ClassNotFoundException e) {
